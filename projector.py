@@ -6,6 +6,7 @@ import dotenv
 
 from glob import glob
 from tqdm import tqdm
+from datetime import datetime
 
 dotenv.load_dotenv()
 
@@ -18,27 +19,34 @@ is_interupted = False
 def graceful_exit(signum, frame):
     global is_interupted
     is_interupted = True
-    print("[INFO] Gracefully exiting...")
+    print(f"{datetime.now()} [INFO] Gracefully exiting...")
 
 
 signal.signal(signal.SIGTERM, graceful_exit)
 signal.signal(signal.SIGINT, graceful_exit)
 
-with tqdm(sorted(glob("kindb/**/*.png", recursive=True))) as progress:
+
+def get_iid(img_path):
+    return int(img_path.split("/")[-1].replace(".png", ""))
+
+
+def npz_exists(img_path):
+    return os.path.exists(img_path.replace(".png", ".npz"))
+
+
+raw_images = glob("kindb/**/*.png", recursive=True)
+raw_images = filter(lambda p: get_iid(p) % mod == reminder, raw_images)
+raw_images = filter(lambda p: not npz_exists(p), raw_images)
+raw_images = sorted(list(raw_images))
+
+with tqdm(raw_images) as progress:
     for img_path in progress:
 
         if is_interupted:
             break
 
-        iid = int(img_path.split("/")[-1].replace(".png", ""))
-        if iid % mod != reminder:
-            continue
-
-        projection_path = img_path.replace(".png", ".npz")
-        if os.path.exists(projection_path):
-            continue
-
-        print(f"[INFO] Projecting image {img_path}...")
+        progress.set_description(
+            desc=f"{datetime.now()} [INFO] Projecting image {img_path}...", refresh=True)
 
         projection_process = subprocess.run(
             ["tools/stylegan2-project.sh", img_path],
@@ -48,8 +56,8 @@ with tqdm(sorted(glob("kindb/**/*.png", recursive=True))) as progress:
             preexec_fn=os.setpgrp)
 
         if projection_process.returncode != 0:
-            print(
-                f"[ERROR] Projection failed with STDERR: {projection_process.stderr}")
+            progress.set_description(
+                desc=f"{datetime.now()} [ERROR] Projection failed with STDERR: {projection_process.stderr}", refresh=True)
             continue
 
         shutil.copyfile("out/projected_w.npz",

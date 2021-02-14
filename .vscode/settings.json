@@ -8,6 +8,9 @@
         "kindb.zip": true,
         "kindb/**": true,
         "out/**": true,
+        ".venv/**": true,
+        ".cache/**": true,
+        "submodules/**": true,
     },
-    "python.condaPath": "/home/matjazibb/miniconda3"
+    "python.pythonPath": ".venv/bin/python"
 }
