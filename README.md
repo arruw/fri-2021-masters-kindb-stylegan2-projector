@@ -28,14 +28,16 @@ $ conda env create -f conda-env.yml
 * Set Google Drive credentials in file `creds.json`
 * Download KinDB dataset from Google Drive
 ```bash
-$ python gdrive.py download 1llRI_7l2Ab2HHEWE5pckB3Q82AoMQ7tN kindb.zip
-$ unzip kindb.zip -d kindb
+$ mkdir .cache
+$ python gdrive.py download 1o_uH84Jk1GbEi0qHkIq2upNc8lZ6f6ex .cache/kindb.zip
+$ unzip .cache/kindb.zip -d .cache/kindb
 ```
 
 * Set `.env` file
 ```
+# This configs can be used to split processing between multiple computers
 REMINDER=0
-MOD=2
+MOD=1
 ```
 
 * Run projector

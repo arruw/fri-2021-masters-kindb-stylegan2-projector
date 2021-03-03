@@ -5,12 +5,26 @@
         "**/.git/subtree-cache/**": true,
         "**/node_modules/*/**": true,
         "**/.hg/store/**": true,
-        "kindb.zip": true,
-        "kindb/**": true,
         "out/**": true,
         ".venv/**": true,
         ".cache/**": true,
         "submodules/**": true,
     },
-    "python.pythonPath": ".venv/bin/python"
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#c36d70",
+        "activityBar.activeBorder": "#90d18e",
+        "activityBar.background": "#c36d70",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#90d18e",
+        "activityBarBadge.foreground": "#15202b",
+        "statusBar.background": "#b34a4d",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#c36d70",
+        "titleBar.activeBackground": "#b34a4d",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#b34a4d99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.remoteColor": "#b34a4d"
 }

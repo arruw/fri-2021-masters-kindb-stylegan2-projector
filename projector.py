@@ -34,7 +34,7 @@ def npz_exists(img_path):
     return os.path.exists(img_path.replace(".png", ".npz"))
 
 
-raw_images = glob("kindb/**/*.png", recursive=True)
+raw_images = glob(".cache/kindb/**/*.png", recursive=True)
 raw_images = filter(lambda p: get_iid(p) % mod == reminder, raw_images)
 raw_images = filter(lambda p: not npz_exists(p), raw_images)
 raw_images = sorted(list(raw_images))
